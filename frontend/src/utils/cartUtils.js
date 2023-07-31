@@ -9,7 +9,7 @@ export const updateCart = (state) => {
   );
 
   // Calculate shipping price (If oreder is over €200 then free, else €20)
-  state.shippingPrice = addDecimals(state.itemsPrice > 200 ? 0 : 20);
+  state.shippingPrice = addDecimals(state.itemsPrice > 500 ? 0 : 20);
 
   // Calculate tax price (tax included in price cause europe is better)
   //   state.taxPrice = 0;
