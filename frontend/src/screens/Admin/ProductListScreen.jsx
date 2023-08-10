@@ -1,16 +1,33 @@
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
 import { FaTimes, FaEdit, FaTrash } from "react-icons/fa";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
-import { useGetProductsQuery } from "../../slices/productsApiSlice";
+import {
+  useGetProductsQuery,
+  useCreateProductMutation,
+} from "../../slices/productsApiSlice";
+import { toast } from "react-toastify";
 
 function ProductListScreen() {
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+
+  const [createProduct, { isLoading: loadingCreate }] =
+    useCreateProductMutation();
 
   const deleteHandler = (id) => {
     console.log(`Delete ${id}`);
+  };
+
+  const createProductHandler = async () => {
+    if (window.confirm("Are you sure you want to create a new product?")) {
+      try {
+        await createProduct();
+        refetch();
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
+      }
+    }
   };
 
   return (
@@ -20,12 +37,13 @@ function ProductListScreen() {
           <h1>Products</h1>
         </Col>
         <Col className="text-end">
-          <Button className="m-3 btn-sm">
+          <Button className="m-3 btn-sm" onClick={createProductHandler}>
             <FaEdit /> Create Product
           </Button>
         </Col>
       </Row>
 
+      {loadingCreate && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
