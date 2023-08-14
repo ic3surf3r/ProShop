@@ -7,6 +7,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import ProductsCaroussel from "../components/ProductsCaroussel";
 import Paginate from "../components/Paginate";
+import Meta from "../components/Meta";
 
 function HomeScreen() {
   const { pageNumber, keyword } = useParams();
@@ -36,6 +37,7 @@ function HomeScreen() {
         </Message>
       ) : (
         <>
+          <Meta />
           {!keyword ? <h1>Latest Products</h1> : <h1>{keyword}</h1>}
           <Row>
             {data.products.map((product) => (
