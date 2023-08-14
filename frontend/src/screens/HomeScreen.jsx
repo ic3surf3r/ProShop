@@ -5,6 +5,7 @@ import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import ProductsCaroussel from "../components/ProductsCaroussel";
 import Paginate from "../components/Paginate";
 
 function HomeScreen() {
@@ -17,7 +18,9 @@ function HomeScreen() {
 
   return (
     <>
-      {keyword && (
+      {!keyword ? (
+        <ProductsCaroussel />
+      ) : (
         <Link to="/" className="btn btn-light mb-4">
           GoBack
         </Link>
